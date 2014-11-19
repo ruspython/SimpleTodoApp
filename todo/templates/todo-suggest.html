@@ -1,0 +1,7 @@
+[{% for todo in todos %}
+    {
+        "id": "{{ todo.pk }}",
+        "desc": "{{ todo.desc }}",
+        "done": "{{ todo.done }}"
+    }{% if not forloop.last %},{% endif %}
+{% endfor %}]

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container" ng-controller="TodoCtrl">
+        <h1>My Todo App</h1>
+        <hr>
+
+        <form ng-submit="addTodo()" name="form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="text" class="form-control" ng-model="newTodo" placeholder="What to do?"
+                           required>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default" type="submit" ng-disabled="form.$invalid">Add</button>
+                    <input type="button" class="btn btn-danger" ng-click="clearDone()" value="Clear Done">
+                </div>
+            </div>
+        </form>
+        <br>
+        <table class="table">
+            <tbody>
+            <tr ng-repeat="todo in todos" class="done-[[todo.done]]">
+                <td>[[ $index+1 ]]</td>
+                <td ng-dblclick="edit(todo)">[[ todo.desc ]]</td>
+                <td>
+                    <button class="btn btn-default" ng-click="doUndo(todo)" ng-show="todo.done == 'False'">Done</button>
+                    <button class="btn btn-default" ng-click="doUndo(todo)" ng-show="todo.done == 'True'">Undone
+                    </button>
+                    <button class="btn btn-default" ng-click="delete(todo)">Delete</button>
+                    {#                    <button class="btn btn-default" ng-click="edit(todo)">Change</button>#}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
